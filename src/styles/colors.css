@@ -50,4 +50,9 @@
   --color-text-soft: #4b5563;
   --color-text-muted: #6b7280;
   --color-text-inverted: #ffffff;
+
+  /* 🌐 TEXT LINKS */
+  --color-links: #3b82f6; /* base blue-500 */
+  --color-links-light: #60a5fa; /* blue-400 — lighter for dark backgrounds */
+  --color-links-dark: #2563eb; /* blue-600 — darker for hover or emphasis */
 }
