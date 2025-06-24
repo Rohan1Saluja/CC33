@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "f77ed057-511a-42f6-b5ac-2a3d0a88ed1f",
     "subject": "Unable to login",
     "status": "OPEN",
     "priority": "HIGH",
@@ -8,7 +8,7 @@
     "createdAt": "2025-06-23T10:00:00Z"
   },
   {
-    "id": "2",
+    "id": "3fea1369-e455-4cf3-bbb8-6a387bbee55c",
     "subject": "App crashing on launch",
     "status": "IN_PROGRESS",
     "priority": "MEDIUM",

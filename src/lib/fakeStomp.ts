@@ -48,7 +48,6 @@ export const fakeStomp = {
 
       count++;
     }, 5000);
-    console.log("→ Mock STOMP sent:", replies[count]);
   },
 
   unsubscribe: () => {

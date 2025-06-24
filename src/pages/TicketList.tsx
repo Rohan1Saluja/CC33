@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTickets } from "../features/tickets/ticketSlice";
 import {
@@ -11,23 +11,48 @@ import {
   Chip,
   Typography,
   Paper,
+  Pagination,
+  Button,
 } from "@mui/material";
 import type { AppDispatch, RootState } from "../store";
 import { useNavigate } from "react-router";
 import TopBar from "../components/TopBar";
+import TicketFilteration from "../components/TicketFilteration";
+import CreateTicket from "../components/CreateTicket";
 
 const TicketList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const role = useSelector((state: RootState) => state.auth.role);
   const { tickets, loading, error } = useSelector(
     (state: RootState) => state.tickets
   );
 
-  useEffect(() => {
+  const [page, setPage] = React.useState(1);
+  const rowsPerPage = 10;
+  const [status, setStatus] = React.useState("");
+  const [priority, setPriority] = React.useState("");
+  const [assignee, setAssignee] = React.useState("");
+
+  const [showForm, setShowForm] = React.useState(false);
+
+  const filteredTickets = tickets.filter(
+    (ticket) =>
+      (status ? ticket.status === status : true) &&
+      (priority ? ticket.priority === priority : true) &&
+      (assignee ? ticket.assignee === assignee : true)
+  );
+
+  const paginatedTickets = filteredTickets.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
+  React.useEffect(() => {
     dispatch(fetchTickets());
   }, [dispatch]);
 
-  console.log("DEBUG - ", { tickets, loading, error });
+  //   console.log("DEBUG - ", { tickets, loading, error });
 
   if (loading) return <CircularProgress />;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -36,9 +61,32 @@ const TicketList = () => {
     <>
       <TopBar />
       <div className="flex flex-col gap-4 px-6 py-4">
-        <Typography variant="h5" className="font-semibold mb-4 text-gray-800">
-          🎫 Ticket List
-        </Typography>
+        <div className="flex items-center justify-between gap-4">
+          <Typography variant="h5" className="font-semibold mb-4 text-gray-800">
+            🎫 Ticket List
+          </Typography>
+          {role === "CUSTOMER" && (
+            <Button
+              variant="contained"
+              className="!bg-primary"
+              onClick={() => setShowForm((prev) => !prev)}
+            >
+              {showForm ? "Cancel" : "Create Ticket"}
+            </Button>
+          )}
+        </div>
+
+        {showForm && <CreateTicket setShowForm={setShowForm} />}
+
+        <TicketFilteration
+          status={status}
+          setStatus={setStatus}
+          assignee={assignee}
+          setAssignee={setAssignee}
+          priority={priority}
+          setPriority={setPriority}
+          tickets={paginatedTickets}
+        />
 
         <Paper
           elevation={1}
@@ -57,7 +105,7 @@ const TicketList = () => {
             </TableHead>
 
             <TableBody>
-              {tickets?.map((ticket, idx) => (
+              {paginatedTickets?.map((ticket, idx) => (
                 <TableRow
                   key={ticket.id}
                   className={`${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
@@ -66,7 +114,9 @@ const TicketList = () => {
                     height: 46,
                   }}
                 >
-                  <TableCell>{ticket.id}</TableCell>
+                  <TableCell title={ticket.id}>
+                    {ticket.id.slice(0, 6)}...
+                  </TableCell>
 
                   <TableCell
                     onClick={() => navigate(ticket.id)}
@@ -122,6 +172,13 @@ const TicketList = () => {
             </TableBody>
           </Table>
         </Paper>
+        <Pagination
+          count={Math.ceil(filteredTickets.length / rowsPerPage)}
+          page={page}
+          onChange={(_, value) => setPage(value)}
+          color="primary"
+          className="mt-4 self-end"
+        />
       </div>
     </>
   );
