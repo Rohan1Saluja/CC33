@@ -1,28 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import TicketList from "./pages/TicketList";
 import TicketDetail from "./pages/TicketDetail";
-import DashboardLayout from "./layouts/DashboardLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/tickets"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<TicketList />} />
-          <Route path=":id" element={<TicketDetail />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Navigate to="/tickets" replace />} />
+          <Route path="/tickets" element={<TicketList />} />
+          <Route path="/tickets/:id" element={<TicketDetail />} />
         </Route>
+
+        {/* Optional fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
