@@ -1,0 +1,25 @@
+@theme {
+  /* 🔸 BASE SHADOWS */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* ↕️ VERTICAL SHADOWS */
+  --shadow-vertical: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-large-vertical: 0 12px 36px rgba(0, 0, 0, 0.18);
+
+  /* ↔️ HORIZONTAL SHADOWS */
+  --shadow-horizontal: 6px 0 16px rgba(0, 0, 0, 0.12);
+  --shadow-large-horizontal: 12px 0 36px rgba(0, 0, 0, 0.18);
+
+  /* ⬆️⬇️⬅️➡️ DIRECTIONAL SHADOWS */
+  --shadow-top: 0 -6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-bottom: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-left: -6px 0 16px rgba(0, 0, 0, 0.12);
+  --shadow-right: 6px 0 16px rgba(0, 0, 0, 0.12);
+
+  /* ⬆️⬇️⬅️➡️ LARGE DIRECTIONAL SHADOWS */
+  --shadow-large-top: 0 -12px 36px rgba(0, 0, 0, 0.18);
+  --shadow-large-bottom: 0 12px 36px rgba(0, 0, 0, 0.18);
+  --shadow-large-left: -12px 0 36px rgba(0, 0, 0, 0.18);
+  --shadow-large-right: 12px 0 36px rgba(0, 0, 0, 0.18);
+}
