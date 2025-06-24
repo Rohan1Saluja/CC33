@@ -25,7 +25,11 @@ export const fetchTickets = createAsyncThunk(
 const ticketSlice = createSlice({
   name: "tickets",
   initialState,
-  reducers: {},
+  reducers: {
+    addTicket: (state, action) => {
+      state.tickets.push(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTickets.pending, (state) => {
@@ -43,4 +47,5 @@ const ticketSlice = createSlice({
   },
 });
 
+export const { addTicket } = ticketSlice.actions;
 export default ticketSlice.reducer;
